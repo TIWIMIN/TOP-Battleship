@@ -1,26 +1,29 @@
 export class Ship {
-  #length
-  #hitPoints; 
+  #length;
+  #hitPoints;
   constructor(length) {
-    this.#length = length; 
-    this.#hitPoints = length; 
+    this.#length = length;
+    this.#hitPoints = length;
   }
 
   getHP() {
-    return this.#hitPoints; 
+    return this.#hitPoints;
+  }
+
+  getLength() {
+    return this.#length; 
   }
 
   hit() {
     if (this.#hitPoints > 0) {
-        this.#hitPoints -= 1; 
+      this.#hitPoints -= 1;
     }
   }
 
   isSunk() {
     if (this.#hitPoints > 0) {
-        return false; 
+      return false;
     }
-    return true; 
+    return true;
   }
-
 }
