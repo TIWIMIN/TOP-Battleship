@@ -4,31 +4,43 @@ export class Gameboard {
   #width;
   #height;
   #board;
+  #shipMap;
 
   constructor() {
     this.#width = 10;
     this.#height = 10;
     this.#board = new Array(10).fill(null).map(() => new Array(10).fill(null));
+    this.#shipMap = new Map();
   }
 
   placeShip(shipName, x, y) {
     const length = this.#shipNameToLength(shipName);
-    if (!this.#isValidPlacement(length, x , y)) return false;
+    if (!this.#isValidPlacement(length, x, y)) return false;
 
+    const ship = new Ship(length);
+    this.#shipMap.set(shipName, ship);
     for (let i = y; i < y + length; i++) {
-        this.#board[x][i] = shipName; 
+      this.#board[x][i] = shipName;
     }
-    return true; 
+    return true;
+  }
+
+  getShip(shipName) {
+    return this.#shipMap.get(shipName); 
+  }
+
+  receiveAttack(x, y) {
+    if (this.#board[x][y] !== null && this.#board[x][y]!== "miss") {
+      this.#shipMap.get(this.#board[x][y]).hit(); 
+    }
   }
 
   #isValidPlacement(length, x, y) {
     // Check if coordinates are within board boundaries
     if (x < 0 || x >= 10) return false;
     else if (y < 0 || y + length >= 10) return false;
-
     // Check if ship overlaps with an existing one
     else if (this.#doesShipOverlap(length, x, y)) return false;
-
     else return true;
   }
 
