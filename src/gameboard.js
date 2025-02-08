@@ -26,13 +26,36 @@ export class Gameboard {
   }
 
   getShip(shipName) {
-    return this.#shipMap.get(shipName); 
+    return this.#shipMap.get(shipName);
+  }
+
+  getBoard() {
+    return this.#board;
   }
 
   receiveAttack(x, y) {
-    if (this.#board[x][y] !== null && this.#board[x][y]!== "miss") {
-      this.#shipMap.get(this.#board[x][y]).hit(); 
+    // Check if coordinates marks a ship
+    if (
+      this.#board[x][y] !== null &&
+      this.#board[x][y] !== "miss" &&
+      this.#board[x][y] !== "hit"
+    ) {
+      this.#shipMap.get(this.#board[x][y]).hit();
+      this.#board[x][y] = "hit";
+      return true;
     }
+    // Check if coordinates marks an empty spot
+    else if (this.#board[x][y] === null) {
+      this.#board[x][y] = "miss";
+      return true;
+    } else return false;
+  }
+
+  areAllShipsSunk() {
+    for (const ship of this.#shipMap.values()) {
+      if (!ship.isSunk()) return false; 
+    }
+    return true; 
   }
 
   #isValidPlacement(length, x, y) {
