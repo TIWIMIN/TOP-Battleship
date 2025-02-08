@@ -10,4 +10,8 @@ export class Player {
     if (isBot) this.#isBot = true; 
     else this.#isBot = false; 
   }
+
+  getName() {
+    return this.#name; 
+  }
 }
