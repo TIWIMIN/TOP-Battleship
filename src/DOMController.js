@@ -1,6 +1,8 @@
 import { Player } from "./player";
 
 export class DOMController {
+  #playerOne;
+  #playerTwo;
   #playScreenContainer = document.querySelector(".play-screen-container");
 
   #gameInitializationContainer = document.querySelector(
@@ -28,14 +30,36 @@ export class DOMController {
     this.#gameInitializationSubmit.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const playerOne = new Player(this.#playerOneNameInput.value, false);
-      const playerTwo = new Player(CPU, true);
-      this.clearScreen(); 
-      this.renderGame(playerOne, playerTwo); 
+      this.#playerOne = new Player(this.#playerOneNameInput.value, false);
+      this.#playerTwo = new Player(CPU, true);
+      this.clearScreen();
+      this.renderGame(playerOne, playerTwo);
     });
   }
 
-  renderGame(playerOne, playerTwo) {
+  renderGame() {
     this.#playScreenContainer.appendChild(this.#gameContainer);
+    for (const row of this.#playerOne.getGameboard().getBoard()) {
+      for (const cell of row) {
+        const cellOnDOM = document.createElement("button");
+        cellOnDOM.classList.add("cell");
+        if (cell === null) cellOnDOM.classList.add("empty");
+        else if (cell === "hit") cellOnDOM.classList.add("hit");
+        else if (cell === "miss") cellOnDOM.classList.add("miss");
+        else cellOnDOM.classList.add("ship");
+        this.#playerOneBoard.appendChild(cellOnDOM);
+      }
+    }
+    for (const row of this.#playerTwo.getGameboard().getBoard()) {
+      for (const cell of row) {
+        const cellOnDOM = document.createElement("button");
+        cellOnDOM.classList.add("cell");
+        if (cell === null) cellOnDOM.classList.add("empty");
+        else if (cell === "hit") cellOnDOM.classList.add("hit");
+        else if (cell === "miss") cellOnDOM.classList.add("miss");
+        else cellOnDOM.classList.add("ship");
+        this.#playerTwoBoard.appendChild(cellOnDOM);
+      }
+    }
   }
 }

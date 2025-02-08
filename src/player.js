@@ -1,11 +1,11 @@
 import { Gameboard } from "./gameboard";
 
 export class Player {
-  #gameBoard;
+  #gameboard;
   #name;
   #isBot;   
   constructor(name, isBot) {
-    this.#gameBoard = new Gameboard(); 
+    this.#gameboard = new Gameboard(); 
     this.#name = name; 
     if (isBot) this.#isBot = true; 
     else this.#isBot = false; 
@@ -13,5 +13,9 @@ export class Player {
 
   getName() {
     return this.#name; 
+  }
+
+  getGameboard() {
+    return this.#gameboard; 
   }
 }
