@@ -53,9 +53,9 @@ export class Gameboard {
 
   areAllShipsSunk() {
     for (const ship of this.#shipMap.values()) {
-      if (!ship.isSunk()) return false; 
+      if (!ship.isSunk()) return false;
     }
-    return true; 
+    return true;
   }
 
   #isValidPlacement(length, x, y) {

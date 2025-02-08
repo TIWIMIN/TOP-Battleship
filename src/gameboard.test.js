@@ -47,11 +47,11 @@ test("receiveAttack() cannot hit already hit tiles", () => {
 });
 
 test("areAllShipsSunk() checks if all ships are sunk", () => {
-    const dummyBoard = new Gameboard(); 
-    dummyBoard.placeShip("Destroyer", 0, 0);
-    expect(dummyBoard.areAllShipsSunk()).toBe(false);  
-    dummyBoard.receiveAttack(0, 0); 
-    dummyBoard.receiveAttack(0, 1); 
-    dummyBoard.receiveAttack(0, 2); 
-    expect(dummyBoard.areAllShipsSunk()).toBe(true); 
-})
+  const dummyBoard = new Gameboard();
+  dummyBoard.placeShip("Destroyer", 0, 0);
+  expect(dummyBoard.areAllShipsSunk()).toBe(false);
+  dummyBoard.receiveAttack(0, 0);
+  dummyBoard.receiveAttack(0, 1);
+  dummyBoard.receiveAttack(0, 2);
+  expect(dummyBoard.areAllShipsSunk()).toBe(true);
+});

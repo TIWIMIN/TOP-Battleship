@@ -11,7 +11,7 @@ export class Ship {
   }
 
   getLength() {
-    return this.#length; 
+    return this.#length;
   }
 
   hit() {
