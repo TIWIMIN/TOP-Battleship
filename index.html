@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Battleship</title>
+  <script defer src="main.js"></script></head>
+  <body>
+    <div class="container">
+      <div class="header">BATTLESHIP</div>
+      <div class="play-screen-container">
+        <div class="game-initialization-container">
+          <div class="game-initialization-instructions">
+            Enter your name below
+          </div>
+          <input
+            type="text"
+            class="player-one-name-input"
+            placeholder="player one name"
+          />
+          <button class="game-initialization-submit">Submit</button>
+        </div>
+        <div class="game-container">
+          <div class="player-one-board"></div>
+          <div class="player-two-board"></div>
+        </div>
+        <div class="game-over-container">
+          <div class="game-over-message"></div>
+          <button class="new-game">New Game?</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
