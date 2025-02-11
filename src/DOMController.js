@@ -17,10 +17,6 @@ export class DOMController {
   #playerOneBoard = document.querySelector(".player-one-board");
   #playerTwoBoard = document.querySelector(".player-two-board");
 
-  #placeShipsScreenContainer = document.querySelector(".place-ships-screen-container"); 
-  #currentShipToPlace = document.querySelector(".current-ship-to-place");
-  #placeShipsBoard = document.querySelector(".place-ships-board"); 
-
   constructor() {
     this.clearScreen();
     this.renderGameInitialization();
@@ -38,17 +34,8 @@ export class DOMController {
       this.#playerOne = new Player(this.#playerOneNameInput.value, false);
       this.#playerTwo = new Player("CPU", true);
       this.clearScreen();
-      this.renderPlaceShipsScreen();
+      this.renderGame();
     });
-  }
-
-  renderPlaceShipsScreen() {
-    this.#playScreenContainer.appendChild(this.#placeShipsScreenContainer); 
-    const listOfShips = ["Carrier", "Battleship", "Destroyer", "Submarine", "Patrol Boat"]; 
-    for (const ship of listOfShips) {
-        this.#currentShipToPlace.textContent = ship; 
-        
-    }
   }
 
   renderGame() {
