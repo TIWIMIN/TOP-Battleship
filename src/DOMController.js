@@ -77,7 +77,7 @@ export class DOMController {
       for (const [y, cell] of row.entries()) {
         const cellOnDOM = document.createElement("button");
         cellOnDOM.classList.add("cell");
-        if (cell === "null") cellOnDOM.classList.add("empty");
+        if (cell === null) cellOnDOM.classList.add("empty");
         else if (cell === "hit") cellOnDOM.classList.add("hit");
         else if (cell === "miss") cellOnDOM.classList.add("miss");
         else cellOnDOM.classList.add("ship");
@@ -102,7 +102,7 @@ export class DOMController {
       for (const [y, cell] of row.entries()) {
         const cellOnDOM = document.createElement("button");
         cellOnDOM.classList.add("cell");
-        if (cell === "null") cellOnDOM.classList.add("empty");
+        if (cell === null) cellOnDOM.classList.add("empty");
         else if (cell === "hit") cellOnDOM.classList.add("hit");
         else if (cell === "miss") cellOnDOM.classList.add("miss");
         else cellOnDOM.classList.add("ship");

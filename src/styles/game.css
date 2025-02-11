@@ -1,0 +1,35 @@
+.game-container {
+    display: grid; 
+    grid-template-columns: 1fr 1fr;  
+    grid-column-gap: 1rem;
+}
+
+.player-one-board {
+    display: grid; 
+    grid-auto-flow: row; 
+    grid-template: repeat(10, 2rem) / repeat(10, 2rem); 
+    grid-gap: 2px; 
+}
+
+.player-two-board {
+    display: grid; 
+    grid-auto-flow: row; 
+    grid-template: repeat(10, 2rem) / repeat(10, 2rem); 
+    grid-gap: 2px;
+}
+.cell {
+    border: none; 
+    border-radius: 3px;
+}
+
+.hit {
+    box-shadow: inset 0px 0px 4px 2px rgb(255, 125, 101); 
+}
+
+.miss {
+    box-shadow: inset 0px 0px 4px 2px  rgb(134, 231, 255); 
+}
+
+.ship {
+    box-shadow: inset 0px 0px 4px 2px  rgb(141, 152, 255); 
+}
