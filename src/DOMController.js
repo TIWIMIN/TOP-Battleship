@@ -39,6 +39,9 @@ export class DOMController {
   }
 
   renderGame() {
+    this.#playerOne.populateBoard(); 
+    this.#playerTwo.populateBoard(); 
+
     this.#playScreenContainer.appendChild(this.#gameContainer);
     for (const row of this.#playerOne.getGameboard().getBoard()) {
       for (const cell of row) {
