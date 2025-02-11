@@ -51,6 +51,24 @@ export class Gameboard {
     } else return false;
   }
 
+  receiveRandomAttack() {
+    const validCoordinates = new Set();
+    for (const [x, row] of this.#board) {
+      for (const [y, cell] of row) {
+        if (cell !== "hit" || cell !== "miss") {
+          validCoordinates.add(JSON.stringify([x, y]));
+        }
+      }
+    }
+
+    const randomCoord = JSON.parse(
+      Array.from(validCoordinates)[
+        Math.floor(Math.random() * validCoordinates.size)
+      ]
+    );
+    this.receiveAttack(...randomCoord); 
+  }
+
   areAllShipsSunk() {
     for (const ship of this.#shipMap.values()) {
       if (!ship.isSunk()) return false;

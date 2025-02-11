@@ -17,6 +17,10 @@ export class DOMController {
   #playerOneBoard = document.querySelector(".player-one-board");
   #playerTwoBoard = document.querySelector(".player-two-board");
 
+  #gameOverContainer = document.querySelector(".game-over-container");
+  #gameOverMessage = document.querySelector(".game-over-message");
+  #newGameButton = document.querySelector("button.new-game");
+
   constructor() {
     this.clearScreen();
     this.renderGameInitialization();
@@ -24,6 +28,8 @@ export class DOMController {
 
   clearScreen() {
     this.#playScreenContainer.textContent = "";
+    this.#playerOneBoard.textContent = "";
+    this.#playerTwoBoard.textContent = "";
   }
 
   renderGameInitialization() {
@@ -33,37 +39,94 @@ export class DOMController {
       e.stopPropagation();
       this.#playerOne = new Player(this.#playerOneNameInput.value, false);
       this.#playerTwo = new Player("CPU", true);
+      this.#playerOne.populateBoard();
+      this.#playerTwo.populateBoard();
       this.clearScreen();
-      this.renderGame();
+      this.renderPlayerOneTurn();
     });
   }
 
-  renderGame() {
-    this.#playerOne.populateBoard(); 
-    this.#playerTwo.populateBoard(); 
-
+  renderPlayerOneTurn() {
     this.#playScreenContainer.appendChild(this.#gameContainer);
-    for (const row of this.#playerOne.getGameboard().getBoard()) {
-      for (const cell of row) {
+    for (const [x, row] of this.#playerTwo.getGameboard().getBoard()) {
+      for (const [y, cell] of row) {
         const cellOnDOM = document.createElement("button");
         cellOnDOM.classList.add("cell");
-        if (cell === null) cellOnDOM.classList.add("empty");
-        else if (cell === "hit") cellOnDOM.classList.add("hit");
+        if (cell === "hit") cellOnDOM.classList.add("hit");
         else if (cell === "miss") cellOnDOM.classList.add("miss");
-        else cellOnDOM.classList.add("ship");
+        else cellOnDOM.classList.add("empty");
+
+        if (cell !== "hit" && cell !== "miss") {
+          cellOnDOM.addEventListener("click", (e) => {
+            e.stopPropagation();
+            this.#playerTwo.getBoard().receiveAttack(x, y);
+            if (this.#playerTwo.getBoard().areAllShipsSunk()) {
+              this.clearScreen();
+              this.renderGameOver(this.#playerOne.getName());
+            } else {
+              this.clearScreen();
+              this.renderPlayerTwoTurn();
+            }
+          });
+        }
         this.#playerOneBoard.appendChild(cellOnDOM);
       }
     }
-    for (const row of this.#playerTwo.getGameboard().getBoard()) {
-      for (const cell of row) {
+
+    for (const [x, row] of this.#playerOne.getGameboard().getBoard()) {
+      for (const [y, cell] of row) {
         const cellOnDOM = document.createElement("button");
         cellOnDOM.classList.add("cell");
-        if (cell === null) cellOnDOM.classList.add("empty");
+        if (cell === "null") cellOnDOM.classList.add("empty");
         else if (cell === "hit") cellOnDOM.classList.add("hit");
         else if (cell === "miss") cellOnDOM.classList.add("miss");
         else cellOnDOM.classList.add("ship");
         this.#playerTwoBoard.appendChild(cellOnDOM);
       }
     }
+  }
+
+  renderPlayerTwoTurn() {
+    this.#playScreenContainer.appendChild(this.#gameContainer);
+    for (const [x, row] of this.#playerTwo.getGameboard().getBoard()) {
+      for (const [y, cell] of row) {
+        const cellOnDOM = document.createElement("button");
+        cellOnDOM.classList.add("cell");
+        if (cell === "hit") cellOnDOM.classList.add("hit");
+        else if (cell === "miss") cellOnDOM.classList.add("miss");
+        else cellOnDOM.classList.add("empty");
+        this.#playerOneBoard.appendChild(cellOnDOM);
+      }
+    }
+    for (const [x, row] of this.#playerOne.getGameboard().getBoard()) {
+      for (const [y, cell] of row) {
+        const cellOnDOM = document.createElement("button");
+        cellOnDOM.classList.add("cell");
+        if (cell === "null") cellOnDOM.classList.add("empty");
+        else if (cell === "hit") cellOnDOM.classList.add("hit");
+        else if (cell === "miss") cellOnDOM.classList.add("miss");
+        else cellOnDOM.classList.add("ship");
+        this.#playerTwoBoard.appendChild(cellOnDOM);
+      }
+    }
+    this.#playerOne.getGameboard().receiveRandomAttack();
+    if (this.#playerOne.getBoard().areAllShipsSunk()) {
+      this.clearScreen();
+      this.renderGameOver(this.#playerOne.getName());
+    } else {
+      this.clearScreen();
+      this.renderPlayerOneTurn();
+    }
+  }
+
+  renderGameOver(winner) {
+    this.#playScreenContainer.appendChild(this.#gameOverContainer);
+    this.#gameOverMessage.textContent = `Congratulations, ${winner} has won!`;
+    this.#newGameButton.addEventListener("click", (e) => {
+      e.preventDefault(); 
+      e.stopPropagation(); 
+      this.clearScreen(); 
+      this.renderGameInitialization(); 
+    });
   }
 }
