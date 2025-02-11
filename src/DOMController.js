@@ -48,8 +48,8 @@ export class DOMController {
 
   renderPlayerOneTurn() {
     this.#playScreenContainer.appendChild(this.#gameContainer);
-    for (const [x, row] of this.#playerTwo.getGameboard().getBoard()) {
-      for (const [y, cell] of row) {
+    for (const [x, row] of this.#playerTwo.getGameboard().getBoard().entries()) {
+      for (const [y, cell] of row.entries()) {
         const cellOnDOM = document.createElement("button");
         cellOnDOM.classList.add("cell");
         if (cell === "hit") cellOnDOM.classList.add("hit");
@@ -59,8 +59,8 @@ export class DOMController {
         if (cell !== "hit" && cell !== "miss") {
           cellOnDOM.addEventListener("click", (e) => {
             e.stopPropagation();
-            this.#playerTwo.getBoard().receiveAttack(x, y);
-            if (this.#playerTwo.getBoard().areAllShipsSunk()) {
+            this.#playerTwo.getGameboard().receiveAttack(x, y);
+            if (this.#playerTwo.getGameboard().areAllShipsSunk()) {
               this.clearScreen();
               this.renderGameOver(this.#playerOne.getName());
             } else {
@@ -73,8 +73,8 @@ export class DOMController {
       }
     }
 
-    for (const [x, row] of this.#playerOne.getGameboard().getBoard()) {
-      for (const [y, cell] of row) {
+    for (const [x, row] of this.#playerOne.getGameboard().getBoard().entries()) {
+      for (const [y, cell] of row.entries()) {
         const cellOnDOM = document.createElement("button");
         cellOnDOM.classList.add("cell");
         if (cell === "null") cellOnDOM.classList.add("empty");
@@ -88,8 +88,8 @@ export class DOMController {
 
   renderPlayerTwoTurn() {
     this.#playScreenContainer.appendChild(this.#gameContainer);
-    for (const [x, row] of this.#playerTwo.getGameboard().getBoard()) {
-      for (const [y, cell] of row) {
+    for (const [x, row] of this.#playerTwo.getGameboard().getBoard().entries()) {
+      for (const [y, cell] of row.entries()) {
         const cellOnDOM = document.createElement("button");
         cellOnDOM.classList.add("cell");
         if (cell === "hit") cellOnDOM.classList.add("hit");
@@ -98,8 +98,8 @@ export class DOMController {
         this.#playerOneBoard.appendChild(cellOnDOM);
       }
     }
-    for (const [x, row] of this.#playerOne.getGameboard().getBoard()) {
-      for (const [y, cell] of row) {
+    for (const [x, row] of this.#playerOne.getGameboard().getBoard().entries()) {
+      for (const [y, cell] of row.entries()) {
         const cellOnDOM = document.createElement("button");
         cellOnDOM.classList.add("cell");
         if (cell === "null") cellOnDOM.classList.add("empty");
@@ -110,7 +110,7 @@ export class DOMController {
       }
     }
     this.#playerOne.getGameboard().receiveRandomAttack();
-    if (this.#playerOne.getBoard().areAllShipsSunk()) {
+    if (this.#playerOne.getGameboard().areAllShipsSunk()) {
       this.clearScreen();
       this.renderGameOver(this.#playerOne.getName());
     } else {

@@ -34,7 +34,7 @@ export class Player {
       }
     }
 
-    for (const ship of shipList) {
+    for (const ship of this.#shipList) {
       // Ensures that we cannot place a ship on an invalid spot
       const coordinatesToRemove = new Set();
       for (let i = 0; i < 10; i++) {

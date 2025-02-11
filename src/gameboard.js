@@ -53,8 +53,8 @@ export class Gameboard {
 
   receiveRandomAttack() {
     const validCoordinates = new Set();
-    for (const [x, row] of this.#board) {
-      for (const [y, cell] of row) {
+    for (const [x, row] of this.#board.entries()) {
+      for (const [y, cell] of row.entries()) {
         if (cell !== "hit" || cell !== "miss") {
           validCoordinates.add(JSON.stringify([x, y]));
         }
